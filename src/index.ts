@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from './types/index'
 import { xhr } from './xhr'
 import { buildURL } from './helpers/url'
+import { transformRequest } from './helpers/data'
 
 function axios(config: AxiosRequestConfig): void {
   xhr(config)
@@ -8,12 +9,17 @@ function axios(config: AxiosRequestConfig): void {
 }
 
 function processConfig(config: AxiosRequestConfig): void {
-  transformURL(config)
+  config.url = transformURL(config)
+  config.data = transformRequest(config)
 }
 
-function transformURL(config: AxiosRequestConfig): void {
+function transformRequestData(config: AxiosRequestConfig): any {
+  return transformRequest(config.data)
+}
+
+function transformURL(config: AxiosRequestConfig): string {
   const { url, params } = config
-  buildURL(url, params)
+  return buildURL(url, params)
 }
 
 export default axios
