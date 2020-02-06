@@ -2,15 +2,22 @@ import { AxiosRequestConfig } from './types/index'
 import { xhr } from './xhr'
 import { buildURL } from './helpers/url'
 import { transformRequest } from './helpers/data'
+import { processHeaders } from './helpers/headers'
 
 function axios(config: AxiosRequestConfig): void {
-  xhr(config)
   processConfig(config)
+  xhr(config)
 }
 
 function processConfig(config: AxiosRequestConfig): void {
   config.url = transformURL(config)
-  config.data = transformRequest(config)
+  config.headers = transformRequestHeader(config)
+  config.data = transformRequestData(config)
+}
+
+function transformRequestHeader(config: AxiosRequestConfig): any {
+  const { headers = {}, data } = config
+  return processHeaders(headers, data)
 }
 
 function transformRequestData(config: AxiosRequestConfig): any {
