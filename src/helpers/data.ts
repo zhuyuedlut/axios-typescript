@@ -1,5 +1,4 @@
 import { isPlainObject } from './utils'
-import { cat } from 'shelljs'
 
 export function transformRequest(data: any): any {
   if (isPlainObject(data)) {
