@@ -1,13 +1,13 @@
-import { AxiosPromise, AxiosRequestConfig, AxiosResponse } from './types/index'
-import { parseHeader } from './helpers/headers'
-import { createError } from './helpers/error'
+import { AxiosPromise, AxiosRequestConfig, AxiosResponse } from '../types'
+import { parseHeader } from '../helpers/headers'
+import { createError } from '../helpers/error'
 
 export function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
     const { data = null, url, method = 'get', headers, responseType, timeout } = config
     let request = new XMLHttpRequest()
     timeout && (request.timeout = timeout)
-    request.open(method.toLocaleUpperCase(), url, true)
+    request.open(method.toLocaleUpperCase(), url!, true)
     request.onreadystatechange = function() {
       if (request.readyState !== 4) {
         return
